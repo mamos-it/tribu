@@ -1,4 +1,5 @@
 import SwiftUI
+import Supabase
 
 struct EventWizardView: View {
     @State private var step: Int = 1
@@ -15,6 +16,8 @@ struct EventWizardView: View {
                     StepTwo
                 } else {
                     StepThree
+                    Button("Salva") { saveEvent() }
+                        .padding(.top)
                 }
                 Spacer()
                 HStack {
@@ -81,6 +84,16 @@ struct EventWizardView: View {
                         Toggle(payment.participant, isOn: $payment.paid)
                     }
                 }
+            }
+        }
+    }
+
+    private func saveEvent() {
+        Task {
+            do {
+                _ = try await supabase.from("events").insert(event).execute()
+            } catch {
+                debugPrint(error)
             }
         }
     }

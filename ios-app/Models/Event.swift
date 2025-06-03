@@ -1,6 +1,6 @@
 import Foundation
 
-struct Event {
+struct Event: Codable {
     var name: String = ""
     var description: String = ""
     var selectedDate: Date?
@@ -8,8 +8,8 @@ struct Event {
     var payments: [Payment] = []
 }
 
-struct Payment: Identifiable {
-    let id = UUID()
+struct Payment: Identifiable, Codable {
+    let id: UUID = UUID()
     var participant: String
     var paid: Bool
 }
